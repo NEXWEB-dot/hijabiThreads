@@ -1,0 +1,847 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>HijabiThreads &mdash; Modest Fashion for Every Occasion</title>
+  <meta name="description" content="Discover premium hijabs, abayas, prayer wear and modest fashion at HijabiThreads. Shop the latest collections crafted with elegance and care." />
+  <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+  <style type="text/tailwindcss">
+    @import "tailwindcss";
+
+    @theme {
+      --color-primary: #000000;
+      --color-secondary: #677433;
+      --color-accent: #e00a8a;
+      --color-surface: #F8F8F8;
+      --color-muted: #999999;
+      --color-border: #E3E3E3;
+      --color-sale: #FF8A7F;
+      --font-display: Georgia, serif;
+      --font-body: system-ui, -apple-system, sans-serif;
+      --radius-card: 0px;
+      --radius-btn: 8px;
+      --radius-badge: 14px;
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes shimmer {
+      0%   { background-position: -200% 0; }
+      100% { background-position:  200% 0; }
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to   { opacity: 1; }
+    }
+
+    /* Hero animations */
+    .hero-label  { animation: fadeUp 0.6s ease both 0.2s; }
+    .hero-title  { animation: fadeUp 0.7s ease both 0.45s; }
+    .hero-sub    { animation: fadeUp 0.7s ease both 0.65s; }
+    .hero-cta    { animation: fadeUp 0.7s ease both 0.85s; }
+
+    /* Scroll-reveal */
+    .reveal {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity 0.65s ease, transform 0.65s ease;
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Product card hover */
+    .product-card .card-img {
+      transition: transform 0.4s ease;
+    }
+    .product-card:hover .card-img {
+      transform: scale(1.05);
+    }
+    .product-card .add-to-cart {
+      transform: translateY(100%);
+      transition: transform 0.35s ease;
+    }
+    .product-card:hover .add-to-cart {
+      transform: translateY(0);
+    }
+
+    /* Header scroll shadow */
+    .header-scrolled {
+      box-shadow: 0 2px 16px rgba(0,0,0,0.08);
+    }
+
+    /* Announcement bar marquee feel */
+    .announce-bar {
+      letter-spacing: 0.12em;
+    }
+
+    /* Editorial divider line */
+    .divider-line::before,
+    .divider-line::after {
+      content: '';
+      display: block;
+      height: 1px;
+      background: #E3E3E3;
+      flex: 1;
+    }
+
+    /* Button base */
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 8px;
+      font-family: system-ui, -apple-system, sans-serif;
+      font-size: 13px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: background 0.2s, color 0.2s, border-color 0.2s;
+    }
+
+
+    /* Category grid */
+    .cat-grid {
+      display: flex;
+      height: 560px;
+      overflow: hidden;
+    }
+    .category-tile {
+      position: relative;
+      overflow: hidden;
+      flex: 1;
+      display: block;
+      cursor: pointer;
+      text-decoration: none;
+    }
+    .cat-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center top;
+      transition: transform 0.7s ease;
+      display: block;
+    }
+    .category-tile:hover .cat-img {
+      transform: scale(1.05);
+    }
+    .cat-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(0,0,0,0.52) 0%, transparent 55%);
+      pointer-events: none;
+      transition: background 0.4s ease;
+    }
+    .category-tile:hover .cat-overlay {
+      background: linear-gradient(to top, rgba(0,0,0,0.65) 0%, rgba(0,0,0,0.08) 55%);
+    }
+    .cat-label {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      padding: 18px 16px 16px;
+      text-align: right;
+    }
+    .cat-label span {
+      font-family: system-ui, -apple-system, sans-serif;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: #fff;
+    }
+    @media (max-width: 767px) {
+      .cat-grid {
+        flex-direction: column;
+        height: auto;
+      }
+      .category-tile {
+        height: 460px;
+        flex: none;
+        width: 100%;
+      }
+    }
+    @media (min-width: 768px) and (max-width: 1023px) {
+      .cat-grid {
+        flex-wrap: wrap;
+        height: auto;
+      }
+      .category-tile {
+        flex: 0 0 50%;
+        height: 380px;
+      }
+    }
+
+    /* Mobile nav */
+    #mobile-nav {
+      transition: max-height 0.35s ease, opacity 0.3s ease;
+      max-height: 0;
+      overflow: hidden;
+      opacity: 0;
+    }
+    #mobile-nav.open {
+      max-height: 320px;
+      opacity: 1;
+    }
+  </style>
+</head>
+<body class="bg-white font-body text-primary antialiased" style="font-family: system-ui,-apple-system,sans-serif; font-size:14px; line-height:1.5;">
+
+  <!-- â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+       1. ANNOUNCEMENT BAR
+  â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• -->
+  <div class="bg-black text-white text-xs py-2 text-center announce-bar" style="letter-spacing:0.12em;">
+    Free Shipping on Orders Over PKR 2,000 &nbsp;Â·&nbsp; Use Code <strong>HIJABI10</strong> for 10% Off &nbsp;Â·&nbsp; New Arrivals Every Friday
+  </div>
+
+  <!-- â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+       2. HEADER / NAVIGATION
+  â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• -->
+  <header id="site-header" class="bg-white sticky top-0 z-50 border-b border-border transition-shadow duration-300" style="border-bottom: 1px solid #E3E3E3;">
+    <div class="max-w-[1200px] mx-auto px-5">
+      <div class="flex items-center justify-between h-16">
+
+        <!-- Left: Hamburger (mobile) + Nav Links (desktop) -->
+        <div class="flex items-center gap-6">
+          <!-- Hamburger -->
+          <button id="hamburger" type="button" aria-label="Open menu" class="lg:hidden flex flex-col gap-[5px] p-1">
+            <span class="hamburger-bar block w-5 h-[1.5px] bg-black transition-all duration-300"></span>
+            <span class="hamburger-bar block w-5 h-[1.5px] bg-black transition-all duration-300"></span>
+            <span class="hamburger-bar block w-5 h-[1.5px] bg-black transition-all duration-300"></span>
+          </button>
+
+          <!-- Desktop nav -->
+          <nav class="hidden lg:flex items-center gap-8" aria-label="Primary navigation">
+            <a href="#new-arrivals" class="nav-link text-black hover:text-secondary transition-colors duration-200" style="font-size:11px; letter-spacing:0.14em; text-transform:uppercase; font-family:system-ui,-apple-system,sans-serif;">Shop</a>
+            <a href="#collections" class="nav-link text-black hover:text-secondary transition-colors duration-200" style="font-size:11px; letter-spacing:0.14em; text-transform:uppercase; font-family:system-ui,-apple-system,sans-serif;">Collections</a>
+            <a href="#prayer" class="nav-link text-black hover:text-secondary transition-colors duration-200" style="font-size:11px; letter-spacing:0.14em; text-transform:uppercase; font-family:system-ui,-apple-system,sans-serif;">Sale</a>
+            <a href="#about" class="nav-link text-black hover:text-secondary transition-colors duration-200" style="font-size:11px; letter-spacing:0.14em; text-transform:uppercase; font-family:system-ui,-apple-system,sans-serif;">About</a>
+          </nav>
+        </div>
+
+        <!-- Center: Logo -->
+        <a href="/" class="absolute left-1/2 -translate-x-1/2" aria-label="HijabiThreads Home">
+          <span style="font-family: Georgia, serif; font-size:22px; font-weight:400; letter-spacing:0.03em; color:#000;">HijabiThreads</span>
+        </a>
+
+        <!-- Right: Icons -->
+        <div class="flex items-center gap-4">
+          <!-- Search -->
+          <button type="button" aria-label="Search" class="text-black hover:text-secondary transition-colors duration-200 p-1">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
+            </svg>
+          </button>
+          <!-- Cart -->
+          <button type="button" aria-label="Shopping cart" class="text-black hover:text-secondary transition-colors duration-200 p-1 relative">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/>
+            </svg>
+            <span class="absolute -top-1 -right-1 bg-accent text-white rounded-full w-4 h-4 flex items-center justify-center" style="font-size:9px; background:#e00a8a;">3</span>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Mobile Nav -->
+    <div id="mobile-nav" class="lg:hidden bg-white border-t border-border" style="border-top:1px solid #E3E3E3;">
+      <nav class="flex flex-col px-5 py-4 gap-4" aria-label="Mobile navigation">
+        <a href="#new-arrivals" class="text-black hover:text-secondary" style="font-size:11px; letter-spacing:0.14em; text-transform:uppercase;">Shop</a>
+        <a href="#collections"  class="text-black hover:text-secondary" style="font-size:11px; letter-spacing:0.14em; text-transform:uppercase;">Collections</a>
+        <a href="#prayer"       class="text-black hover:text-secondary" style="font-size:11px; letter-spacing:0.14em; text-transform:uppercase;">Sale</a>
+        <a href="#about"        class="text-black hover:text-secondary" style="font-size:11px; letter-spacing:0.14em; text-transform:uppercase;">About</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+
+    <!-- â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+         3. HERO SECTION
+    â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• -->
+    <section class="relative overflow-hidden" style="min-height:85vh;">
+      <img
+        src="858702253_17953616229273378_4560003239917733461_n.webp"
+        alt="Woman wearing a beautiful hijab &mdash; HijabiThreads new collection"
+        class="absolute inset-0 w-full h-full object-cover object-center"
+        style="min-height:85vh;"
+        loading="eager"
+      />
+      <!-- Overlay -->
+      <div class="absolute inset-0 bg-black/40"></div>
+
+      <!-- Content -->
+      <div class="relative flex flex-col items-center justify-center text-center px-6 h-full" style="min-height:85vh;">
+        <p class="hero-label text-white mb-4" style="font-size:11px; letter-spacing:0.22em; text-transform:uppercase; font-family:system-ui,-apple-system,sans-serif; opacity:0.85;">
+          New Collection &mdash; Autumn 2025
+        </p>
+        <h1 class="hero-title text-white mb-5" style="font-family:Georgia,serif; font-size:clamp(36px,6vw,62px); font-weight:400; line-height:1.15; max-width:720px;">
+          Modesty in<br/>Every Thread
+        </h1>
+        <p class="hero-sub text-white/80 mb-9" style="font-size:15px; max-width:420px; line-height:1.7;">
+          Discover our latest hijabs, abayas &amp; prayer wear &mdash; crafted with intention, worn with grace.
+        </p>
+        <div class="hero-cta flex flex-col sm:flex-row gap-3">
+          <a href="#new-arrivals" class="btn-primary bg-white text-black px-9 py-3 hover:bg-surface" style="font-size:12px; letter-spacing:0.1em;">
+            Shop Now &rarr;
+          </a>
+          <a href="#collections" class="btn-primary text-white px-9 py-3" style="font-size:12px; letter-spacing:0.1em; border:1px solid rgba(255,255,255,0.6);">
+            View Collections
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+         4. JUST IN &mdash; NEW ARRIVALS
+    â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• -->
+    <section id="new-arrivals" class="max-w-[1200px] mx-auto px-5" style="margin-top:75px; margin-bottom:75px;">
+      <!-- Section heading -->
+      <div class="reveal text-center mb-12">
+        <p style="font-size:11px; letter-spacing:0.18em; text-transform:uppercase; color:#999; font-family:system-ui,-apple-system,sans-serif; margin-bottom:10px;">Fresh Drops</p>
+        <h2 style="font-family:Georgia,serif; font-size:clamp(26px,4vw,36px); font-weight:400; color:#000; margin-bottom:16px;">Just In</h2>
+        <div class="divider-line flex items-center gap-5 max-w-[160px] mx-auto">
+          <div style="height:1px; background:#E3E3E3; flex:1;"></div>
+          <svg width="12" height="12" viewBox="0 0 12 12" fill="#677433"><circle cx="6" cy="6" r="3"/></svg>
+          <div style="height:1px; background:#E3E3E3; flex:1;"></div>
+        </div>
+      </div>
+
+      <!-- 4-column grid -->
+      <div class="grid grid-cols-2 lg:grid-cols-4 gap-[30px]">
+
+        <!-- Card 1 -->
+        <article class="product-card reveal group cursor-pointer">
+          <div class="relative overflow-hidden" style="aspect-ratio:3/4;">
+            <img src="731417533_17936843199273378_1406667821305969010_n.webp"
+                 alt="Rayon Hijab in Beaver Brown"
+                 class="card-img w-full h-full object-cover" loading="lazy" />
+            <span class="absolute top-3 left-3 text-white px-3 py-1 text-xs uppercase tracking-widest" style="background:#000; border-radius:14px; font-size:9px; letter-spacing:0.1em;">New</span>
+            <!-- Add to cart -->
+            <div class="add-to-cart absolute bottom-0 left-0 right-0 py-3 text-center" style="background:#000;">
+              <button type="button" class="text-white text-xs uppercase tracking-widest" style="font-size:10px; letter-spacing:0.14em; font-family:system-ui,-apple-system,sans-serif;">+ Add to Cart</button>
+            </div>
+          </div>
+          <div class="pt-3 pb-1">
+            <h3 style="font-family:Georgia,serif; font-size:14px; color:#000; font-weight:400; margin-bottom:4px;">Rayon Hijab &mdash; Beaver Brown</h3>
+            <p style="font-size:14px; color:#999;">PKR 850</p>
+          </div>
+        </article>
+
+        <!-- Card 2 -->
+        <article class="product-card reveal group cursor-pointer">
+          <div class="relative overflow-hidden" style="aspect-ratio:3/4;">
+            <img src="800779984_17947466250273378_2007521923048539687_n.webp"
+                 alt="Rayon Hijab in Tan Brown"
+                 class="card-img w-full h-full object-cover" loading="lazy" />
+            <span class="absolute top-3 left-3 text-white px-3 py-1 text-xs uppercase tracking-widest" style="background:#000; border-radius:14px; font-size:9px; letter-spacing:0.1em;">New</span>
+            <div class="add-to-cart absolute bottom-0 left-0 right-0 py-3 text-center" style="background:#000;">
+              <button type="button" class="text-white text-xs uppercase tracking-widest" style="font-size:10px; letter-spacing:0.14em; font-family:system-ui,-apple-system,sans-serif;">+ Add to Cart</button>
+            </div>
+          </div>
+          <div class="pt-3 pb-1">
+            <h3 style="font-family:Georgia,serif; font-size:14px; color:#000; font-weight:400; margin-bottom:4px;">Rayon Hijab &mdash; Tan Brown</h3>
+            <p style="font-size:14px; color:#999;">PKR 850</p>
+          </div>
+        </article>
+
+        <!-- Card 3 -->
+        <article class="product-card reveal group cursor-pointer">
+          <div class="relative overflow-hidden" style="aspect-ratio:3/4;">
+            <img src="800924581_17947466259273378_4258943424329358943_n.webp"
+                 alt="Namaz Chadar Premium Prayer Wrap"
+                 class="card-img w-full h-full object-cover" loading="lazy" />
+            <span class="absolute top-3 left-3 text-white px-3 py-1 text-xs uppercase tracking-widest" style="background:#677433; border-radius:14px; font-size:9px; letter-spacing:0.1em;">Bestseller</span>
+            <div class="add-to-cart absolute bottom-0 left-0 right-0 py-3 text-center" style="background:#000;">
+              <button type="button" class="text-white text-xs uppercase tracking-widest" style="font-size:10px; letter-spacing:0.14em; font-family:system-ui,-apple-system,sans-serif;">+ Add to Cart</button>
+            </div>
+          </div>
+          <div class="pt-3 pb-1">
+            <h3 style="font-family:Georgia,serif; font-size:14px; color:#000; font-weight:400; margin-bottom:4px;">Namaz Chadar &mdash; Premium</h3>
+            <p style="font-size:14px; color:#999;">PKR 1,200</p>
+          </div>
+        </article>
+
+        <!-- Card 4 -->
+        <article class="product-card reveal group cursor-pointer">
+          <div class="relative overflow-hidden" style="aspect-ratio:3/4;">
+            <img src="800924581_17947466304273378_252163861717643984_n.webp"
+                 alt="Chiffon Hijab in Dusty Rose"
+                 class="card-img w-full h-full object-cover object-top" loading="lazy" />
+            <span class="absolute top-3 left-3 text-white px-3 py-1" style="background:#e00a8a; border-radius:14px; font-size:9px; letter-spacing:0.1em; text-transform:uppercase;">Sale</span>
+            <div class="add-to-cart absolute bottom-0 left-0 right-0 py-3 text-center" style="background:#000;">
+              <button type="button" class="text-white text-xs uppercase tracking-widest" style="font-size:10px; letter-spacing:0.14em; font-family:system-ui,-apple-system,sans-serif;">+ Add to Cart</button>
+            </div>
+          </div>
+          <div class="pt-3 pb-1">
+            <h3 style="font-family:Georgia,serif; font-size:14px; color:#000; font-weight:400; margin-bottom:4px;">Chiffon Hijab &mdash; Dusty Rose</h3>
+            <div class="flex items-center gap-2">
+              <p style="font-size:14px; color:#e00a8a;">PKR 600</p>
+              <p style="font-size:13px; color:#bbb; text-decoration:line-through;">PKR 750</p>
+            </div>
+          </div>
+        </article>
+
+        <!-- Card 5 -->
+        <article class="product-card reveal group cursor-pointer">
+          <div class="relative overflow-hidden" style="aspect-ratio:3/4;">
+            <img src="801199906_17947466274273378_3130519888825629821_n.webp"
+                 alt="Georgette Dupatta in Olive Green"
+                 class="card-img w-full h-full object-cover object-top" loading="lazy" />
+            <span class="absolute top-3 left-3 text-white px-3 py-1" style="background:#000; border-radius:14px; font-size:9px; letter-spacing:0.1em; text-transform:uppercase;">New</span>
+            <div class="add-to-cart absolute bottom-0 left-0 right-0 py-3 text-center" style="background:#000;">
+              <button type="button" class="text-white text-xs uppercase tracking-widest" style="font-size:10px; letter-spacing:0.14em; font-family:system-ui,-apple-system,sans-serif;">+ Add to Cart</button>
+            </div>
+          </div>
+          <div class="pt-3 pb-1">
+            <h3 style="font-family:Georgia,serif; font-size:14px; color:#000; font-weight:400; margin-bottom:4px;">Georgette Dupatta &mdash; Olive</h3>
+            <p style="font-size:14px; color:#999;">PKR 950</p>
+          </div>
+        </article>
+
+        <!-- Card 6 -->
+        <article class="product-card reveal group cursor-pointer">
+          <div class="relative overflow-hidden" style="aspect-ratio:3/4;">
+            <img src="810090934_17948301408273378_4441191875684567654_n.webp"
+                 alt="Jersey Hijab in Charcoal"
+                 class="card-img w-full h-full object-cover object-top" loading="lazy" />
+            <div class="add-to-cart absolute bottom-0 left-0 right-0 py-3 text-center" style="background:#000;">
+              <button type="button" class="text-white text-xs uppercase tracking-widest" style="font-size:10px; letter-spacing:0.14em; font-family:system-ui,-apple-system,sans-serif;">+ Add to Cart</button>
+            </div>
+          </div>
+          <div class="pt-3 pb-1">
+            <h3 style="font-family:Georgia,serif; font-size:14px; color:#000; font-weight:400; margin-bottom:4px;">Jersey Hijab &mdash; Charcoal</h3>
+            <p style="font-size:14px; color:#999;">PKR 650</p>
+          </div>
+        </article>
+
+        <!-- Card 7 -->
+        <article class="product-card reveal group cursor-pointer">
+          <div class="relative overflow-hidden" style="aspect-ratio:3/4;">
+            <img src="858702253_17953616229273378_4560003239917733461_n.webp"
+                 alt="Abaya in Midnight Black"
+                 class="card-img w-full h-full object-cover object-top" loading="lazy" />
+            <span class="absolute top-3 left-3 text-white px-3 py-1" style="background:#000; border-radius:14px; font-size:9px; letter-spacing:0.1em; text-transform:uppercase;">New</span>
+            <div class="add-to-cart absolute bottom-0 left-0 right-0 py-3 text-center" style="background:#000;">
+              <button type="button" class="text-white text-xs uppercase tracking-widest" style="font-size:10px; letter-spacing:0.14em; font-family:system-ui,-apple-system,sans-serif;">+ Add to Cart</button>
+            </div>
+          </div>
+          <div class="pt-3 pb-1">
+            <h3 style="font-family:Georgia,serif; font-size:14px; color:#000; font-weight:400; margin-bottom:4px;">Abaya &mdash; Midnight Black</h3>
+            <p style="font-size:14px; color:#999;">PKR 2,800</p>
+          </div>
+        </article>
+
+        <!-- Card 8 -->
+        <article class="product-card reveal group cursor-pointer">
+          <div class="relative overflow-hidden" style="aspect-ratio:3/4;">
+            <img src="731417533_17936843199273378_1406667821305969010_n.webp"
+                 alt="Prayer Set in Ivory White"
+                 class="card-img w-full h-full object-cover object-top" loading="lazy" />
+            <span class="absolute top-3 left-3 text-white px-3 py-1" style="background:#677433; border-radius:14px; font-size:9px; letter-spacing:0.1em; text-transform:uppercase;">Popular</span>
+            <div class="add-to-cart absolute bottom-0 left-0 right-0 py-3 text-center" style="background:#000;">
+              <button type="button" class="text-white text-xs uppercase tracking-widest" style="font-size:10px; letter-spacing:0.14em; font-family:system-ui,-apple-system,sans-serif;">+ Add to Cart</button>
+            </div>
+          </div>
+          <div class="pt-3 pb-1">
+            <h3 style="font-family:Georgia,serif; font-size:14px; color:#000; font-weight:400; margin-bottom:4px;">Prayer Set &mdash; Ivory</h3>
+            <p style="font-size:14px; color:#999;">PKR 1,500</p>
+          </div>
+        </article>
+
+      </div>
+
+      <!-- View all -->
+      <div class="text-center mt-12 reveal">
+        <a href="#" class="btn-primary border border-black text-black px-10 py-3 hover:bg-black hover:text-white transition-colors duration-250" style="font-size:11px; letter-spacing:0.12em;">
+          View All New Arrivals
+        </a>
+      </div>
+    </section>
+
+    <!-- â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+         5. SHOP BY STYLE &mdash; EDITORIAL BANNER
+    â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• -->
+    <section id="collections" style="margin-top:75px;">
+
+      <!-- Horizontal scrolling collection quick-links -->
+      <div style="overflow-x:auto; white-space:nowrap; border-top:1px solid #E3E3E3; border-bottom:1px solid #E3E3E3; padding:12px 20px; -webkit-overflow-scrolling:touch; scrollbar-width:none;">
+        <div style="display:inline-flex; gap:32px;">
+          <a href="#new-arrivals" style="font-size:12px; color:#000; font-family:system-ui,-apple-system,sans-serif; text-decoration:none; display:inline-flex; align-items:center; gap:5px; flex-shrink:0; white-space:nowrap;">No More Struggle <span>&rarr;</span></a>
+          <a href="#" style="font-size:12px; color:#000; font-family:system-ui,-apple-system,sans-serif; text-decoration:none; display:inline-flex; align-items:center; gap:5px; flex-shrink:0; white-space:nowrap;">The Show-stopper <span>&rarr;</span></a>
+          <a href="#prayer" style="font-size:12px; color:#000; font-family:system-ui,-apple-system,sans-serif; text-decoration:none; display:inline-flex; align-items:center; gap:5px; flex-shrink:0; white-space:nowrap;">Prayer Essentials <span>&rarr;</span></a>
+          <a href="#new-arrivals" style="font-size:12px; color:#000; font-family:system-ui,-apple-system,sans-serif; text-decoration:none; display:inline-flex; align-items:center; gap:5px; flex-shrink:0; white-space:nowrap;">Just Arrived <span>&rarr;</span></a>
+          <a href="#" style="font-size:12px; color:#000; font-family:system-ui,-apple-system,sans-serif; text-decoration:none; display:inline-flex; align-items:center; gap:5px; flex-shrink:0; white-space:nowrap;">Sale Picks <span>&rarr;</span></a>
+        </div>
+      </div>
+
+      <!-- Section Heading -->
+      <div class="reveal text-center" style="padding:38px 0 28px;">
+        <p style="font-size:11px; letter-spacing:0.22em; text-transform:uppercase; color:#000; font-family:system-ui,-apple-system,sans-serif; font-weight:600;">Shop by Category</p>
+      </div>
+
+      <!-- Category tiles -->
+      <div class="cat-grid">
+
+        <a href="#" class="category-tile" aria-label="Shop Abaya and Kaftan">
+          <img src="858702253_17953616229273378_4560003239917733461_n.webp" alt="Woman in a beige abaya and kaftan" class="cat-img" loading="lazy" />
+          <div class="cat-overlay"></div>
+          <div class="cat-label"><span>Abaya &amp; Kaftan</span></div>
+        </a>
+
+        <a href="#new-arrivals" class="category-tile" aria-label="Shop Hijab and Scarves">
+          <img src="810090934_17948301408273378_4441191875684567654_n.webp" alt="Woman wearing a slate blue hijab scarf" class="cat-img" loading="lazy" />
+          <div class="cat-overlay"></div>
+          <div class="cat-label"><span>Hijab &amp; Scarves</span></div>
+        </a>
+
+        <a href="#prayer" class="category-tile" aria-label="Shop Chadars and Wraps">
+          <img src="800924581_17947466304273378_252163861717643984_n.webp" alt="Woman in a mauve chadar wrap" class="cat-img" loading="lazy" />
+          <div class="cat-overlay"></div>
+          <div class="cat-label"><span>Chadars &amp; Wraps</span></div>
+        </a>
+
+        <a href="#prayer" class="category-tile" aria-label="Shop Prayer Sets">
+          <img src="800924581_17947466259273378_4258943424329358943_n.webp" alt="Collection of prayer sets and namaz wear" class="cat-img" loading="lazy" />
+          <div class="cat-overlay"></div>
+          <div class="cat-label"><span>Prayer Sets</span></div>
+        </a>
+
+      </div>
+    </section>
+
+    <!-- â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+         6. NAMAZ & PRAYER COLLECTION
+    â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• -->
+    <section id="prayer" class="max-w-[1200px] mx-auto px-5" style="margin-top:75px; margin-bottom:75px;">
+      <div class="reveal text-center mb-12">
+        <p style="font-size:11px; letter-spacing:0.18em; text-transform:uppercase; color:#999; font-family:system-ui,-apple-system,sans-serif; margin-bottom:10px;">Devotion &amp; Grace</p>
+        <h2 style="font-family:Georgia,serif; font-size:clamp(26px,4vw,36px); font-weight:400; color:#000; margin-bottom:16px;">Namaz &amp; Prayer Collection</h2>
+        <div class="flex items-center gap-4 max-w-[160px] mx-auto">
+          <div style="height:1px; background:#E3E3E3; flex:1;"></div>
+          <svg width="12" height="12" viewBox="0 0 12 12" fill="#677433"><circle cx="6" cy="6" r="3"/></svg>
+          <div style="height:1px; background:#E3E3E3; flex:1;"></div>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-2 lg:grid-cols-4 gap-[30px]">
+
+        <!-- Prayer Card 1 -->
+        <article class="product-card reveal group cursor-pointer">
+          <div class="relative overflow-hidden" style="aspect-ratio:3/4;">
+            <img src="800924581_17947466259273378_4258943424329358943_n.webp"
+                 alt="Luxury Namaz Chadar in White"
+                 class="card-img w-full h-full object-cover" loading="lazy" />
+            <span class="absolute top-3 left-3 text-white px-3 py-1" style="background:#677433; border-radius:14px; font-size:9px; letter-spacing:0.1em; text-transform:uppercase;">Prayer</span>
+            <div class="add-to-cart absolute bottom-0 left-0 right-0 py-3 text-center" style="background:#000;">
+              <button type="button" class="text-white text-xs uppercase tracking-widest" style="font-size:10px; letter-spacing:0.14em; font-family:system-ui,-apple-system,sans-serif;">+ Add to Cart</button>
+            </div>
+          </div>
+          <div class="pt-3 pb-1">
+            <h3 style="font-family:Georgia,serif; font-size:14px; color:#000; font-weight:400; margin-bottom:4px;">Luxury Namaz Chadar &mdash; White</h3>
+            <p style="font-size:14px; color:#999;">PKR 1,400</p>
+          </div>
+        </article>
+
+        <!-- Prayer Card 2 -->
+        <article class="product-card reveal group cursor-pointer">
+          <div class="relative overflow-hidden" style="aspect-ratio:3/4;">
+            <img src="800924581_17947466304273378_252163861717643984_n.webp"
+                 alt="Complete Prayer Set with Hijab and Abaya"
+                 class="card-img w-full h-full object-cover object-top" loading="lazy" />
+            <span class="absolute top-3 left-3 text-white px-3 py-1" style="background:#000; border-radius:14px; font-size:9px; letter-spacing:0.1em; text-transform:uppercase;">Set</span>
+            <div class="add-to-cart absolute bottom-0 left-0 right-0 py-3 text-center" style="background:#000;">
+              <button type="button" class="text-white text-xs uppercase tracking-widest" style="font-size:10px; letter-spacing:0.14em; font-family:system-ui,-apple-system,sans-serif;">+ Add to Cart</button>
+            </div>
+          </div>
+          <div class="pt-3 pb-1">
+            <h3 style="font-family:Georgia,serif; font-size:14px; color:#000; font-weight:400; margin-bottom:4px;">Prayer Set &mdash; Cream &amp; Gold</h3>
+            <p style="font-size:14px; color:#999;">PKR 2,200</p>
+          </div>
+        </article>
+
+        <!-- Prayer Card 3 -->
+        <article class="product-card reveal group cursor-pointer">
+          <div class="relative overflow-hidden" style="aspect-ratio:3/4;">
+            <img src="810090934_17948301408273378_4441191875684567654_n.webp"
+                 alt="Embroidered Prayer Jananmaz"
+                 class="card-img w-full h-full object-cover object-center" loading="lazy" />
+            <span class="absolute top-3 left-3 text-white px-3 py-1" style="background:#e00a8a; border-radius:14px; font-size:9px; letter-spacing:0.1em; text-transform:uppercase;">Sale</span>
+            <div class="add-to-cart absolute bottom-0 left-0 right-0 py-3 text-center" style="background:#000;">
+              <button type="button" class="text-white text-xs uppercase tracking-widest" style="font-size:10px; letter-spacing:0.14em; font-family:system-ui,-apple-system,sans-serif;">+ Add to Cart</button>
+            </div>
+          </div>
+          <div class="pt-3 pb-1">
+            <h3 style="font-family:Georgia,serif; font-size:14px; color:#000; font-weight:400; margin-bottom:4px;">Embroidered Prayer Jananmaz</h3>
+            <div class="flex items-center gap-2">
+              <p style="font-size:14px; color:#e00a8a;">PKR 1,100</p>
+              <p style="font-size:13px; color:#bbb; text-decoration:line-through;">PKR 1,500</p>
+            </div>
+          </div>
+        </article>
+
+        <!-- Prayer Card 4 -->
+        <article class="product-card reveal group cursor-pointer">
+          <div class="relative overflow-hidden" style="aspect-ratio:3/4;">
+            <img src="801199906_17947466274273378_3130519888825629821_n.webp"
+                 alt="Soft Velvet Prayer Dupatta"
+                 class="card-img w-full h-full object-cover object-top" loading="lazy" />
+            <span class="absolute top-3 left-3 text-white px-3 py-1" style="background:#000; border-radius:14px; font-size:9px; letter-spacing:0.1em; text-transform:uppercase;">New</span>
+            <div class="add-to-cart absolute bottom-0 left-0 right-0 py-3 text-center" style="background:#000;">
+              <button type="button" class="text-white text-xs uppercase tracking-widest" style="font-size:10px; letter-spacing:0.14em; font-family:system-ui,-apple-system,sans-serif;">+ Add to Cart</button>
+            </div>
+          </div>
+          <div class="pt-3 pb-1">
+            <h3 style="font-family:Georgia,serif; font-size:14px; color:#000; font-weight:400; margin-bottom:4px;">Soft Velvet Prayer Dupatta</h3>
+            <p style="font-size:14px; color:#999;">PKR 980</p>
+          </div>
+        </article>
+
+      </div>
+    </section>
+
+    <!-- â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+         7. CTA STRIP &mdash; MODEST. ELEGANT. YOU.
+    â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• -->
+    <section class="reveal" style="background:#F8F8F8; padding:100px 20px; text-align:center;">
+      <p style="font-size:11px; letter-spacing:0.2em; text-transform:uppercase; color:#999; font-family:system-ui,-apple-system,sans-serif; margin-bottom:14px;">Our Promise</p>
+      <h2 style="font-family:Georgia,serif; font-size:clamp(28px,5vw,46px); font-weight:400; color:#000; margin-bottom:14px;">Modest. Elegant. You.</h2>
+      <p style="font-size:15px; color:#999; max-width:440px; margin:0 auto 36px; line-height:1.75;">
+        Handpicked fabrics, thoughtful silhouettes, and styles made for the modern modest woman.
+      </p>
+      <div class="flex flex-col sm:flex-row gap-3 justify-center">
+        <a href="#new-arrivals" class="btn-primary bg-black text-white px-10 py-3 hover:bg-secondary transition-colors duration-250" style="font-size:11px; letter-spacing:0.12em;">
+          Shop Hijabs
+        </a>
+        <a href="#collections" class="btn-primary text-black px-10 py-3 hover:bg-black hover:text-white transition-colors duration-250" style="font-size:11px; letter-spacing:0.12em; border:1.5px solid #000;">
+          View All
+        </a>
+      </div>
+    </section>
+
+    <!-- â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+         8. NEWSLETTER
+    â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• -->
+    <section class="reveal" style="background:#fff; padding:80px 20px; text-align:center; border-top:1px solid #E3E3E3;">
+      <p style="font-size:11px; letter-spacing:0.2em; text-transform:uppercase; color:#999; font-family:system-ui,-apple-system,sans-serif; margin-bottom:12px;">Join the Community</p>
+      <h2 style="font-family:Georgia,serif; font-size:clamp(22px,4vw,32px); font-weight:400; color:#000; margin-bottom:10px;">Stay in the Loop</h2>
+      <p style="font-size:14px; color:#999; max-width:380px; margin:0 auto 32px; line-height:1.7;">
+        Get early access to new arrivals, exclusive offers, and modest fashion inspiration &mdash; straight to your inbox.
+      </p>
+      <form class="flex flex-col sm:flex-row gap-3 justify-center max-w-md mx-auto" onsubmit="return false;" aria-label="Newsletter signup">
+        <input
+          type="email"
+          placeholder="Your email address"
+          aria-label="Email address"
+          required
+          class="flex-1 px-5 py-3 text-sm border border-border outline-none focus:border-black transition-colors"
+          style="border:1px solid #E3E3E3; border-radius:8px; font-size:14px; font-family:system-ui,-apple-system,sans-serif; min-width:0;"
+        />
+        <button type="submit" class="btn-primary bg-black text-white px-7 py-3 hover:bg-secondary transition-colors duration-250 whitespace-nowrap" style="font-size:11px; letter-spacing:0.1em;">
+          Subscribe
+        </button>
+      </form>
+      <p style="font-size:11px; color:#bbb; margin-top:14px;">No spam. Unsubscribe anytime.</p>
+    </section>
+
+  </main>
+
+  <!-- â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+       9. FOOTER
+  â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• -->
+  <footer id="about" style="background:#111; color:#fff; padding:70px 20px 0;">
+    <div class="max-w-[1200px] mx-auto">
+      <!-- Top: 4 columns -->
+      <div class="grid grid-cols-2 lg:grid-cols-4 gap-10 pb-12" style="border-bottom:1px solid rgba(255,255,255,0.1);">
+
+        <!-- Brand -->
+        <div class="col-span-2 lg:col-span-1">
+          <p style="font-family:Georgia,serif; font-size:20px; font-weight:400; color:#fff; margin-bottom:14px;">HijabiThreads</p>
+          <p style="font-size:13px; color:rgba(255,255,255,0.5); line-height:1.8; max-width:220px;">
+            Premium modest fashion for the modern Muslim woman. Quality fabrics, timeless designs.
+          </p>
+          <!-- Social icons -->
+          <div class="flex gap-4 mt-5">
+            <a href="#" aria-label="Instagram" class="text-white/50 hover:text-white transition-colors">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+            </a>
+            <a href="#" aria-label="Facebook" class="text-white/50 hover:text-white transition-colors">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+            </a>
+            <a href="#" aria-label="Pinterest" class="text-white/50 hover:text-white transition-colors">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2C6.48 2 2 6.48 2 12c0 4.24 2.65 7.86 6.39 9.29-.09-.78-.17-1.98.04-2.83.18-.77 1.22-5.17 1.22-5.17s-.31-.62-.31-1.54c0-1.44.84-2.52 1.88-2.52.89 0 1.32.67 1.32 1.47 0 .9-.57 2.24-.87 3.48-.25 1.04.52 1.88 1.54 1.88 1.84 0 3.09-2.36 3.09-5.16 0-2.14-1.44-3.63-3.5-3.63-2.39 0-3.79 1.79-3.79 3.64 0 .72.28 1.49.62 1.91.07.08.08.16.06.24-.06.26-.21.84-.24.95-.04.15-.13.18-.3.11-1.11-.52-1.8-2.14-1.8-3.44 0-2.79 2.03-5.36 5.85-5.36 3.07 0 5.46 2.19 5.46 5.11 0 3.05-1.92 5.5-4.58 5.5-.9 0-1.74-.47-2.03-1.02l-.55 2.07c-.2.77-.74 1.73-1.1 2.32.83.26 1.7.4 2.61.4 5.52 0 10-4.48 10-10S17.52 2 12 2z"/></svg>
+            </a>
+          </div>
+        </div>
+
+        <!-- Quick Links -->
+        <div>
+          <h3 style="font-size:11px; letter-spacing:0.14em; text-transform:uppercase; color:rgba(255,255,255,0.4); margin-bottom:16px; font-family:system-ui,-apple-system,sans-serif;">Quick Links</h3>
+          <ul class="space-y-2">
+            <li><a href="#" style="font-size:13px; color:rgba(255,255,255,0.65);" class="hover:text-white transition-colors">New Arrivals</a></li>
+            <li><a href="#" style="font-size:13px; color:rgba(255,255,255,0.65);" class="hover:text-white transition-colors">Best Sellers</a></li>
+            <li><a href="#" style="font-size:13px; color:rgba(255,255,255,0.65);" class="hover:text-white transition-colors">Sale</a></li>
+            <li><a href="#" style="font-size:13px; color:rgba(255,255,255,0.65);" class="hover:text-white transition-colors">About Us</a></li>
+            <li><a href="#" style="font-size:13px; color:rgba(255,255,255,0.65);" class="hover:text-white transition-colors">Contact</a></li>
+          </ul>
+        </div>
+
+        <!-- Collections -->
+        <div>
+          <h3 style="font-size:11px; letter-spacing:0.14em; text-transform:uppercase; color:rgba(255,255,255,0.4); margin-bottom:16px; font-family:system-ui,-apple-system,sans-serif;">Collections</h3>
+          <ul class="space-y-2">
+            <li><a href="#" style="font-size:13px; color:rgba(255,255,255,0.65);" class="hover:text-white transition-colors">Rayon Hijabs</a></li>
+            <li><a href="#" style="font-size:13px; color:rgba(255,255,255,0.65);" class="hover:text-white transition-colors">Chiffon Hijabs</a></li>
+            <li><a href="#" style="font-size:13px; color:rgba(255,255,255,0.65);" class="hover:text-white transition-colors">Namaz Chadars</a></li>
+            <li><a href="#" style="font-size:13px; color:rgba(255,255,255,0.65);" class="hover:text-white transition-colors">Abayas</a></li>
+            <li><a href="#" style="font-size:13px; color:rgba(255,255,255,0.65);" class="hover:text-white transition-colors">Prayer Sets</a></li>
+          </ul>
+        </div>
+
+        <!-- Contact -->
+        <div>
+          <h3 style="font-size:11px; letter-spacing:0.14em; text-transform:uppercase; color:rgba(255,255,255,0.4); margin-bottom:16px; font-family:system-ui,-apple-system,sans-serif;">Contact</h3>
+          <ul class="space-y-3">
+            <li style="font-size:13px; color:rgba(255,255,255,0.65); display:flex; gap:8px; align-items:flex-start;">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="margin-top:2px; flex-shrink:0;"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+              hello@hijabithreads.pk
+            </li>
+            <li style="font-size:13px; color:rgba(255,255,255,0.65); display:flex; gap:8px; align-items:flex-start;">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="margin-top:2px; flex-shrink:0;"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.63 3.47 2 2 0 0 1 3.6 1.27h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L7.91 9A16 16 0 0 0 15 16.09l1.09-1.09a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+              +92 300 123 4567
+            </li>
+            <li style="font-size:13px; color:rgba(255,255,255,0.65); display:flex; gap:8px; align-items:flex-start;">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="margin-top:2px; flex-shrink:0;"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+              Lahore, Pakistan
+            </li>
+          </ul>
+        </div>
+
+      </div>
+
+      <!-- Bottom bar -->
+      <div class="flex flex-col sm:flex-row items-center justify-between gap-3 py-6">
+        <p style="font-size:12px; color:rgba(255,255,255,0.3);">&copy; 2025 HijabiThreads. All rights reserved.</p>
+        <div class="flex gap-5">
+          <a href="#" style="font-size:12px; color:rgba(255,255,255,0.3);" class="hover:text-white/60 transition-colors">Privacy Policy</a>
+          <a href="#" style="font-size:12px; color:rgba(255,255,255,0.3);" class="hover:text-white/60 transition-colors">Terms of Service</a>
+          <a href="#" style="font-size:12px; color:rgba(255,255,255,0.3);" class="hover:text-white/60 transition-colors">Returns &amp; Exchanges</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+       JAVASCRIPT
+  â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• -->
+  <script>
+    'use strict';
+
+    // â”€â”€ 1. Mobile nav toggle â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+    const hamburger  = document.getElementById('hamburger');
+    const mobileNav  = document.getElementById('mobile-nav');
+    const hamburgerBars = hamburger.querySelectorAll('.hamburger-bar');
+
+    hamburger.addEventListener('click', () => {
+      const isOpen = mobileNav.classList.toggle('open');
+      hamburger.setAttribute('aria-expanded', isOpen);
+      // Animate bars to X
+      if (isOpen) {
+        hamburgerBars[0].style.transform = 'translateY(6.5px) rotate(45deg)';
+        hamburgerBars[1].style.opacity   = '0';
+        hamburgerBars[2].style.transform = 'translateY(-6.5px) rotate(-45deg)';
+      } else {
+        hamburgerBars[0].style.transform = '';
+        hamburgerBars[1].style.opacity   = '';
+        hamburgerBars[2].style.transform = '';
+      }
+    });
+
+    // Close on nav link click
+    mobileNav.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', () => {
+        mobileNav.classList.remove('open');
+        hamburgerBars[0].style.transform = '';
+        hamburgerBars[1].style.opacity   = '';
+        hamburgerBars[2].style.transform = '';
+      });
+    });
+
+    // â”€â”€ 2. Header shadow on scroll â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+    const header = document.getElementById('site-header');
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 10) {
+        header.classList.add('header-scrolled');
+      } else {
+        header.classList.remove('header-scrolled');
+      }
+    }, { passive: true });
+
+    // â”€â”€ 3. IntersectionObserver &mdash; reveal on scroll â”€â”€â”€â”€
+    const revealEls = document.querySelectorAll('.reveal');
+    const revealObserver = new IntersectionObserver((entries) => {
+      entries.forEach((entry, i) => {
+        if (entry.isIntersecting) {
+          // Stagger children product cards
+          entry.target.style.transitionDelay = '0ms';
+          entry.target.classList.add('visible');
+          revealObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+
+    revealEls.forEach(el => revealObserver.observe(el));
+
+    // Stagger product cards within grids
+    document.querySelectorAll('.grid').forEach(grid => {
+      const cards = grid.querySelectorAll('.product-card.reveal');
+      cards.forEach((card, i) => {
+        card.style.transitionDelay = `${i * 80}ms`;
+      });
+    });
+
+    // â”€â”€ 4. Active nav link on scroll â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+    const sections   = document.querySelectorAll('section[id], footer[id]');
+    const navLinks   = document.querySelectorAll('.nav-link');
+
+    const navObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const id = entry.target.getAttribute('id');
+          navLinks.forEach(link => {
+            const href = link.getAttribute('href').replace('#', '');
+            if (href === id) {
+              link.style.color = '#677433'; // secondary olive
+            } else {
+              link.style.color = '';
+            }
+          });
+        }
+      });
+    }, { threshold: 0.4 });
+
+    sections.forEach(sec => navObserver.observe(sec));
+
+    // â”€â”€ 5. Smooth scroll â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', e => {
+        const target = document.querySelector(anchor.getAttribute('href'));
+        if (target) {
+          e.preventDefault();
+          target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      });
+    });
+  </script>
+
+</body>
+</html>
+
+
